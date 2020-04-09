@@ -1,7 +1,6 @@
 import edit_distance
 import re
 import dict_loader
-import main
 
 
 class Word:
@@ -34,14 +33,16 @@ class Spellchecker:
 
 
 class Writer:
-    def __init__(self, text):
+    def __init__(self, text, spellchecker, out):
         self.old_text = text
+        self.spellchecker = spellchecker
+        self.out = out
 
     def create_corrected_text(self):
         word = ''
         new_text = ''
         for letter in self.old_text:
-            for e in check_text(prepare_text(self.old_text)):
+            for e in check_text(prepare_text(self.old_text), self.spellchecker):
                 if word == e.not_checked and not e.is_correct:
                     print(word)
                     new_text = new_text.replace(word,
@@ -54,10 +55,10 @@ class Writer:
         return new_text
 
     def write_corrected_text(self):
-        if main.out == 'console':
+        if self.out == 'console':
             print(self.create_corrected_text())
         else:
-            with open(main.out, 'w') as f:
+            with open(self.out, 'w') as f:
                 f.write(self.create_corrected_text())
 
 
@@ -69,10 +70,10 @@ def prepare_text(text):
 
 # takes split text and returns list of not checked and checked words
 # plus an indication if they are correct or not
-def check_text(words):
+def check_text(words, spellchecker):
     words_and_changes = []
     for word in words:
-        is_correct = main.s.check_if_word_is_correct(word)
-        corrected_word = main.s.to_correct_word(word)
+        is_correct = spellchecker.check_if_word_is_correct(word)
+        corrected_word = spellchecker.to_correct_word(word)
         words_and_changes.append(Word(word, is_correct, corrected_word))
     return words_and_changes
