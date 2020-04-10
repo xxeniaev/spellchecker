@@ -18,5 +18,5 @@ else:
 link = 'https://drive.google.com/uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx'
 # link = input('enter the link for the dictionary(you can find some in links.txt):')
 s = spellcheck.Spellchecker(link)
-w = spellcheck.Writer(text)
+w = spellcheck.Writer(text, s, out)
 w.write_corrected_text()

@@ -6,8 +6,7 @@ def load(link):
         html_response = response.read()
         encoding = response.headers.get_content_charset('utf-8')
         contents = html_response.decode(encoding)
-    dictionary = set(
-            word.lower()
-            for word in contents.splitlines()
-        )
+    dictionary = set()
+    dictionary.update(contents.lower().split())
+
     return dictionary
