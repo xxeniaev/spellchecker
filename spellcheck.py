@@ -3,13 +3,6 @@ import re
 import dict_loader
 
 
-class Word:
-    def __init__(self, a, b, c):
-        self.not_checked = a
-        self.is_correct = b
-        self.checked = c
-
-
 class Spellchecker:
     def __init__(self, link):
         self.dict = dict_loader.load(link)
@@ -42,18 +35,16 @@ class Writer:
         self.out = out
 
     def create_corrected_text(self):
-        word = ''
+        pattern = re.compile(r'([a-zA-Z]+)')
+        dictionary = check_text(prepare_text(self.old_text), self.spellchecker)
         new_text = ''
-        for letter in self.old_text:
-            for e in check_text(prepare_text(self.old_text), self.spellchecker):
-                if word == e.not_checked and not e.is_correct:
-                    new_text = new_text.replace(word,
-                                                '{} <{}>'.format(e.not_checked,
-                                                                 e.checked))
-            word += letter
-            new_text += letter
-            if not letter.isalpha():
-                word = ''
+        for word in self.old_text.split():
+            out = word
+            if pattern.search(word).group().lower() != dictionary[pattern.search(word.lower()).group()]:
+                out = word.replace(pattern.search(word).group(), '{} <{}>'.format(pattern.search(word).group(),
+                                                                                  dictionary[
+                                                                                      pattern.search(word).group()]))
+            new_text += out + ' '
         return new_text
 
     def write_corrected_text(self):
@@ -75,12 +66,12 @@ def check_text(words, spellchecker):
     """takes split text and returns list of not checked and checked words
     plus an indication if they are correct or not"""
 
-    words_and_changes = []
+    words_and_changes = {}
     for word in words:
-        is_correct = spellchecker.check_if_word_is_correct(word)
-        if is_correct:
-            words_and_changes.append(Word(word, is_correct, word))
-        else:
-            corrected_word = spellchecker.to_correct_word(word)
-            words_and_changes.append(Word(word, is_correct, corrected_word))
+        word = word.lower()
+        if word not in words_and_changes:
+            if spellchecker.check_if_word_is_correct(word):
+                words_and_changes[word] = word
+            else:
+                words_and_changes[word] = spellchecker.to_correct_word(word)
     return words_and_changes
