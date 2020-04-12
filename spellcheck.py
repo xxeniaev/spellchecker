@@ -26,6 +26,9 @@ class Spellchecker:
         for st in self.dict:
             levenshtein_distance = edit_distance.levenshtein_distance(st,
                                                                       word)
+            if levenshtein_distance == 1:
+                correct_word = st
+                break
             if levenshtein_distance < min_distance:
                 min_distance = levenshtein_distance
                 correct_word = st
@@ -44,7 +47,6 @@ class Writer:
         for letter in self.old_text:
             for e in check_text(prepare_text(self.old_text), self.spellchecker):
                 if word == e.not_checked and not e.is_correct:
-                    print(word)
                     new_text = new_text.replace(word,
                                                 '{} <{}>'.format(e.not_checked,
                                                                  e.checked))
@@ -62,18 +64,23 @@ class Writer:
                 f.write(self.create_corrected_text())
 
 
-# takes not checked text and splits it by words (words are not low cased)
 def prepare_text(text):
+    """takes not checked text and splits it by words (words are not low cased)"""
+
     pattern = re.compile(r'([a-zA-Z]+)\W*')
     return pattern.findall(text)
 
 
-# takes split text and returns list of not checked and checked words
-# plus an indication if they are correct or not
 def check_text(words, spellchecker):
+    """takes split text and returns list of not checked and checked words
+    plus an indication if they are correct or not"""
+
     words_and_changes = []
     for word in words:
         is_correct = spellchecker.check_if_word_is_correct(word)
-        corrected_word = spellchecker.to_correct_word(word)
-        words_and_changes.append(Word(word, is_correct, corrected_word))
+        if is_correct:
+            words_and_changes.append(Word(word, is_correct, word))
+        else:
+            corrected_word = spellchecker.to_correct_word(word)
+            words_and_changes.append(Word(word, is_correct, corrected_word))
     return words_and_changes
