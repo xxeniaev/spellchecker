@@ -1,11 +1,11 @@
 from urllib.request import urlopen
+import codecs
 
 
 def load(link):
     with urlopen(link) as response:
         html_response = response.read()
-        encoding = response.headers.get_content_charset('utf-8')
-        contents = html_response.decode(encoding)
+        contents = codecs.decode(html_response, 'utf8')
     dictionary = set()
     dictionary.update(contents.lower().split())
 

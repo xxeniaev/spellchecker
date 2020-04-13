@@ -23,10 +23,10 @@ elif lang == 'test_eng':
 elif lang == 'test_rus':
     link = 'https://drive.google.com/uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'
 else:
-    link = 'https://drive.google.com/uc?export=download&id=1vHrLRqukd6SJv8tbG9zDpJxA6xUk5usE'
+    link = 'https://drive.google.com/uc?export=download&id=1Wa-Np2-vPUnNxJhUEDPGAOmYHdqkEydp'
 
 s = spellcheck.Spellchecker(link)
-w = spellcheck.Writer(text, s, out)
+w = spellcheck.Writer(text, s, out, inp)
 w.write_corrected_text()
 
 print('Done!')

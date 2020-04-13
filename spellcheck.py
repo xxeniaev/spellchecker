@@ -1,13 +1,14 @@
 import edit_distance
 import re
 import dict_loader
+import codecs
 
 
 class Spellchecker:
     def __init__(self, link):
         self.dict = dict_loader.load(link)
         if not self.dict:
-            print('ERROR')
+            AttributeError
 
     def check_if_word_is_correct(self, word):
         word = word.lower()
@@ -17,8 +18,7 @@ class Spellchecker:
         word = word.lower()
         min_distance = 9999999
         for st in self.dict:
-            levenshtein_distance = edit_distance.levenshtein_distance(st,
-                                                                      word)
+            levenshtein_distance = edit_distance.levenshtein_distance(st, word)
             if levenshtein_distance == 1:
                 correct_word = st
                 break
@@ -29,22 +29,25 @@ class Spellchecker:
 
 
 class Writer:
-    def __init__(self, text, spellchecker, out):
-        self.old_text = text
+    def __init__(self, text, spellchecker, out, inp):
+        if inp == 'console':
+            self.old_text = text
+        else:
+            self.old_text = codecs.decode(codecs.encode(text, 'cp1251'), 'utf8')
         self.spellchecker = spellchecker
         self.out = out
 
     def create_corrected_text(self):
-        pattern = re.compile(r'([a-zA-Z]+)')
+        pattern = re.compile(r'([a-zA-Zа-яА-Я]+)')
         dictionary = check_text(prepare_text(self.old_text), self.spellchecker)
         new_text = ''
         for word in self.old_text.split():
-            out = word
+            temp = word
             if pattern.search(word).group().lower() != dictionary[pattern.search(word.lower()).group()]:
-                out = word.replace(pattern.search(word).group(), '{} <{}>'.format(pattern.search(word).group(),
+                temp = word.replace(pattern.search(word).group(), '{} <{}>'.format(pattern.search(word).group(),
                                                                                   dictionary[
                                                                                       pattern.search(word).group()]))
-            new_text += out + ' '
+            new_text += temp + ' '
         return new_text
 
     def write_corrected_text(self):
@@ -58,7 +61,7 @@ class Writer:
 def prepare_text(text):
     """takes not checked text and splits it by words (words are not low cased)"""
 
-    pattern = re.compile(r'([a-zA-Z]+)\W*')
+    pattern = re.compile(r'([a-zA-Zа-яА-Я]+)\W*')
     return pattern.findall(text)
 
 
