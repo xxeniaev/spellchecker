@@ -8,7 +8,7 @@ class Spellchecker:
     def __init__(self, link):
         self.dict = dict_loader.load(link)
         if not self.dict:
-            AttributeError
+            raise AttributeError("sorry, dictionary can't be loaded")
 
     def check_if_word_is_correct(self, word):
         word = word.lower()
@@ -33,22 +33,26 @@ class Writer:
         if inp == 'console':
             self.old_text = text
         else:
-            self.old_text = codecs.decode(codecs.encode(text, 'cp1251'), 'utf8')
+            self.old_text = codecs.decode(codecs.encode(text, 'cp1251'),
+                                          'utf8')
         self.spellchecker = spellchecker
         self.out = out
 
     def create_corrected_text(self):
         pattern = re.compile(r'([a-zA-Zа-яА-Я]+)')
         dictionary = check_text(prepare_text(self.old_text), self.spellchecker)
-        new_text = ''
+        new_text = []
         for word in self.old_text.split():
             temp = word
-            if pattern.search(word).group().lower() != dictionary[pattern.search(word.lower()).group()]:
-                temp = word.replace(pattern.search(word).group(), '{} <{}>'.format(pattern.search(word).group(),
-                                                                                  dictionary[
-                                                                                      pattern.search(word).group()]))
-            new_text += temp + ' '
-        return new_text
+            if pattern.search(word).group().lower() \
+                    != dictionary[pattern.search(
+                    word.lower()).group()]:
+                temp = word.replace(
+                    pattern.search(word).group(),
+                    '{} <{}>'.format(pattern.search(word).group(),
+                                     dictionary[pattern.search(word).group()]))
+            new_text.append(temp)
+        return ' '.join(new_text)
 
     def write_corrected_text(self):
         if self.out == 'console':
@@ -59,7 +63,8 @@ class Writer:
 
 
 def prepare_text(text):
-    """takes not checked text and splits it by words (words are not low cased)"""
+    """takes not checked text and splits it by words
+    (words are not low cased)"""
 
     pattern = re.compile(r'([a-zA-Zа-яА-Я]+)\W*')
     return pattern.findall(text)
