@@ -2,6 +2,7 @@ import edit_distance
 import re
 import dict_loader
 import codecs
+import sys
 
 
 class Spellchecker:
@@ -9,6 +10,7 @@ class Spellchecker:
         self.dict = dict_loader.load(link)
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")
+            sys.exit(0)
 
     def check_if_word_is_correct(self, word):
         word = word.lower()

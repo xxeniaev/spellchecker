@@ -22,14 +22,18 @@ def main():
             text = f.read()
 
     lang = input('choose the language(eng/rus): ')
-    link = get_link(lang)
+    try:
+        link = get_link(lang)
+    except UnboundLocalError:
+        print('you have probably chosen the language that doesn\'t exist')
+        sys.exit(0)
 
     s = spellcheck.Spellchecker(link)
     w = spellcheck.Writer(text, s, out, inp)
     w.write_corrected_text()
 
     print('done!')
-    print('thank you for using spellchecker, see you later, all the love')
+    print('thank you for using spellchecker')
 
 
 def get_link(lang):
@@ -42,7 +46,7 @@ def get_link(lang):
     elif lang == 'test_rus':
         link = 'https://drive.google.com/' \
                'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'
-    else:
+    elif lang == 'rus':
         link = 'https://drive.google.com/' \
                'uc?export=download&id=1Wa-Np2-vPUnNxJhUEDPGAOmYHdqkEydp'
     return link
