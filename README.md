@@ -1,5 +1,5 @@
 # Spellchecker
-points your mistakes out in texts and corrects them.
+highlights mistakes in texts and corrects them.
 ## Getting Started
 you'll have to download the program form here and have spellchecking mood ***(optional)***.
 ## Usage
