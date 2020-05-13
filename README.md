@@ -9,7 +9,8 @@ you'll have to download the program form here and have spellchecking mood ***(op
 * use `--lang` or `-l` for choosing language or creating dictionary from your text.
   * `eng`(for choosing English)
   * `rus`(for choosing Russian)
-  * `created`(creating dictionary)
+  * `created`(creating dictionary):
+    * enter link for the text in `enter link for creating dictionary:` line
 * `done!` message says that chellcheck is correctly complited :)
 ### Examples
 ```
