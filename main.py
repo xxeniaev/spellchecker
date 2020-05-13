@@ -5,15 +5,26 @@ import sys
 
 def main():
     parser = argparse.ArgumentParser(
-        description='enter input and/or output files(console by default)')
-    parser.add_argument('--input', type=str, metavar='', default='console',
-                        help='enter the name of input file')
-    parser.add_argument('--output', type=str, metavar='', default='console',
-                        help='enter the name of output file')
+        description='enter input and/or output files(console by default) '
+                    'and language')
+    parser.add_argument('--input', '-in', type=str, metavar='',
+                        default='console', help='enter the name of input file')
+    parser.add_argument('--output', '-out', type=str, metavar='',
+                        default='console', help='enter the name of output file')
+    parser.add_argument('--lang', '-l', type=str, metavar='',
+                        help='enter language(eng/rus/created)')
     args = parser.parse_args()
 
     inp = args.input
     out = args.output
+    lang = args.lang
+
+    try:
+        link = get_link(lang)
+    except UnboundLocalError:
+        print('you have not probably chosen the language or the chosen '
+              'language doesn\'t exist')
+        sys.exit(0)
 
     if inp == 'console':
         text = input('enter your text: ')
@@ -21,17 +32,11 @@ def main():
         with open(inp, 'r') as f:
             text = f.read()
 
-    lang = input('choose the language(eng/rus): ')
-    try:
-        link = get_link(lang)
-    except UnboundLocalError:
-        print('you have probably chosen the language that doesn\'t exist')
-        sys.exit(0)
-
-    s = spellcheck.Spellchecker(link)
+    s = spellcheck.Spellchecker(link, lang)
     w = spellcheck.Writer(text, s, out, inp)
     w.write_corrected_text()
 
+    print('\n')
     print('done!')
     print('thank you for using spellchecker')
 
@@ -49,6 +54,8 @@ def get_link(lang):
     elif lang == 'rus':
         link = 'https://drive.google.com/' \
                'uc?export=download&id=1Wa-Np2-vPUnNxJhUEDPGAOmYHdqkEydp'
+    elif lang == 'created':
+        link = input('enter link for creating dictionary:')
     return link
 
 
