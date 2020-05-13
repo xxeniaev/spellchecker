@@ -14,7 +14,7 @@ class Spellchecker:
             self.dict = dict_loader.load(link)
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")
-            sys.exit(0)
+            sys.exit(1)
 
     def check_if_word_is_correct(self, word):
         word = word.lower()

@@ -55,7 +55,7 @@ def get_link(lang):
         link = 'https://drive.google.com/' \
                'uc?export=download&id=1Wa-Np2-vPUnNxJhUEDPGAOmYHdqkEydp'
     elif lang == 'created':
-        link = input('enter link for creating dictionary:')
+        link = input('enter link for creating dictionary: ')
     return link
 
 
