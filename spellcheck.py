@@ -25,11 +25,6 @@ class Spellchecker:
         min_distance = 9999999
         for st in self.dict:
             levenshtein_distance = edit_distance.levenshtein_distance(st, word)
-            # if the 'incorrect' word doesn't have letters from dict it means
-            # that the word is correct but is written in different language
-            if levenshtein_distance == len(word):
-                correct_word = word
-                break
             if levenshtein_distance == 1:
                 correct_word = st
                 break

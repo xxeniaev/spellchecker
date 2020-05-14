@@ -2,14 +2,18 @@ import unittest
 import spellcheck
 import edit_distance
 import dict_loader
+import dict_creator
 import main
 
 s_eng = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx')
+    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx', 'eng')
 s_rus = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif')
+    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif', 'rus')
+s_created = spellcheck.Spellchecker(
+    'https://drive.google.com/'
+    'uc?export=download&id=18_GzIghX22D4KqW9axTKeKO4GPayEROl', 'created')
 w_eng = spellcheck.Writer('Programming is awsome!', s_eng,
                           'console', 'console')
 w_rus = spellcheck.Writer('Программирование васхитительно!', s_rus,
@@ -85,6 +89,14 @@ class SpellcheckerTest(unittest.TestCase):
         self.assertIsNotNone(dict_loader.load(
             'https://drive.google.com/uc?export=download&id='
             '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'))
+
+    def test_dict_creator(self):
+        self.assertIsNotNone(dict_creator.create(
+            'https://drive.google.com/uc?export=download&id='
+            '18_GzIghX22D4KqW9axTKeKO4GPayEROl'))
+        self.assertIsNotNone(dict_creator.load(
+            'https://drive.google.com/uc?export=download&id='
+            '18_GzIghX22D4KqW9axTKeKO4GPayEROl'))
 
     def test_main(self):
         self.assertIsNotNone(main.get_link('eng'))
