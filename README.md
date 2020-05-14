@@ -29,6 +29,6 @@ python main.py --lang eng
 * more tests(words with hyphen, abbreviations, numerals, forms of words)
 * make counting faster(n-gramms, automation, hashing, data structures, fuzzy serch, pre-calculation)
 * parsing arguments with `sys.stdin`
-* progressbar
+* ignoring foreign language words
 ## Authors
 * **Xenia Evdokimova** ([xxeniaev](https://github.com/xxeniaev))
