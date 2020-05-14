@@ -1,7 +1,7 @@
 # Spellchecker
 highlights mistakes in texts and corrects them.
 ## Getting Started
-you'll have to download the program form here and have spellchecking mood ***(optional)***.
+you'll have to download the program from here and have spellchecking mood ***(optional)***.
 ## Usage
 ### Notes
 * use `--input` or `-in` for choosing file to be corrected (make sure that it is located in the directory where the spellchecker is). if you don't wanna use this option you can write the text on your own below in `enter your text:`  line ***(optional)***.
