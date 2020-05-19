@@ -2,6 +2,8 @@
 highlights mistakes in texts and corrects them.
 ## Getting Started
 you'll have to download the program from here and have spellchecking mood ***(optional)***.
+### Requirements
+* `tqdm` (installing by pip)
 ## Usage
 ### Notes
 * use `--input` or `-in` for choosing file to be corrected (make sure that it is located in the directory where the spellchecker is). if you don't wanna use this option you can write the text on your own below in `enter your text:`  line ***(optional)***.
@@ -25,6 +27,13 @@ python main.py --output file_name.txt --lang eng
 ```
 python main.py --lang eng
 ```
+## Modules
+* `main.py` launching
+* `spellcheck.py` spellchecking
+* `edit_distance.py` algorithm of Levenshtein Distance
+* `dict_loader.py` loading dictionary
+* `dict_creator.py` creating dictionary
+* `test_spellchecker.py` testing program
 ## Future versions
 * more tests(words with hyphen, abbreviations, numerals, forms of words)
 * make counting faster(n-gramms, automation, hashing, data structures, fuzzy serch, pre-calculation)
