@@ -1,6 +1,7 @@
 import unittest
 import spellcheck
-import edit_distance
+import trie_distance
+# import edit_distance
 import dict_loader
 import dict_creator
 import main
@@ -72,7 +73,7 @@ class SpellcheckerTest(unittest.TestCase):
                          {'программирование': 'программирование',
                           'васхитительно': 'восхитительно'})
 
-    def test_edit_distance(self):
+    '''def test_edit_distance(self):
         self.assertEqual(edit_distance.levenshtein_distance(
             'awsome', 'awesome'), 1)
         self.assertEqual(edit_distance.levenshtein_distance(
@@ -80,7 +81,7 @@ class SpellcheckerTest(unittest.TestCase):
         self.assertEqual(edit_distance.levenshtein_distance(
             'programming', 'programming'), 0)
         self.assertEqual(edit_distance.levenshtein_distance(
-            'программирование', 'программирование'), 0)
+            'программирование', 'программирование'), 0)'''
 
     def test_dict_loader(self):
         self.assertIsNotNone(dict_loader.load(
@@ -101,3 +102,18 @@ class SpellcheckerTest(unittest.TestCase):
     def test_main(self):
         self.assertIsNotNone(main.get_link('eng'))
         self.assertIsNotNone(main.get_link('rus'))
+
+    def test_trie_distance_search(self):
+        trie_rus = trie_distance.dict_to_trie(s_rus.dict)
+        trie_eng = trie_distance.dict_to_trie(s_eng.dict)
+
+        self.assertEqual(trie_distance.search('васхитительно', 0, trie_rus), [])
+        self.assertEqual(trie_distance.search('васхитительно', 1, trie_rus),
+                         [('восхитительно', 1)])
+        self.assertEqual(trie_distance.search('васхитительно', 2, trie_rus),
+                         [('восхитительно', 1)])
+        self.assertEqual(trie_distance.search('awsome', 0, trie_eng), [])
+        self.assertEqual(trie_distance.search('awsome', 1, trie_eng),
+                         [('awesome', 1)])
+        self.assertEqual(trie_distance.search('awsome', 2, trie_eng),
+                         [('awesome', 1)])

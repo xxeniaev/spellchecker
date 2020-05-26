@@ -1,5 +1,4 @@
 from pip._vendor.msgpack.fallback import xrange
-import spellcheck
 
 
 # The Trie data structure keeps a set of words, organized with one node for
@@ -19,17 +18,17 @@ class TrieNode:
         node.word = word
 
 
-# read dictionary file into a trie
 def dict_to_trie(name):
+    """read dictionary file into a trie"""
     trie = TrieNode()
     for word in name:
         trie.insert(word)
     return trie
 
 
-# The search function returns a list of all words that are less than the given
-# maximum distance from the target word
 def search(word, max_cost, trie):
+    """The function returns a list of all words that are less than the given
+    maximum distance from the target word"""
     # build first row
     current_row = range(len(word) + 1)
     results = []
@@ -40,9 +39,9 @@ def search(word, max_cost, trie):
     return results
 
 
-# This recursive helper is used by the search function above. It assumes that
-# the previous_row has been filled in already.
 def search_recursive(node, letter, word, previous_row, results, max_cost):
+    """This recursive helper is used by the search function above.
+    It assumes that the previous_row has been filled in already"""
     columns = len(word) + 1
     current_row = [previous_row[0] + 1]
 
