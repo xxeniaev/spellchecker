@@ -1,9 +1,9 @@
-import edit_distance
 import re
 import dict_loader
 import dict_creator
 import codecs
 import sys
+import trie_distance
 
 
 class Spellchecker:
@@ -21,16 +21,13 @@ class Spellchecker:
         return word in self.dict
 
     def to_correct_word(self, word):
-        word = word.lower()
-        min_distance = 9999999
-        for st in self.dict:
-            levenshtein_distance = edit_distance.levenshtein_distance(st, word)
-            if levenshtein_distance == 1:
-                correct_word = st
+        trie = trie_distance.dict_to_trie(self.dict)
+        correct_word = ''
+        for i in range(len(word)+1):
+            results = trie_distance.search(word, i, trie)
+            if results:
+                correct_word = results[0][0]
                 break
-            if levenshtein_distance < min_distance:
-                min_distance = levenshtein_distance
-                correct_word = st
         return correct_word
 
 
