@@ -30,7 +30,7 @@ python main.py --lang eng
 ## Modules
 * `main.py` launching
 * `spellcheck.py` spellchecking
-* `edit_distance.py` algorithm of Levenshtein Distance
+* `trie_distance.py` algorithm of Levenshtein Distance + bor trie
 * `dict_loader.py` loading dictionary
 * `dict_creator.py` creating dictionary
 * `test_spellchecker.py` testing program
