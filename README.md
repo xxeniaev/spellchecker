@@ -39,7 +39,6 @@ python main.py --create file_name.txt
 * `dict_creator.py` creating dictionary
 * `test_spellchecker.py` testing program
 ## Future versions
-* more tests(words with hyphen, abbreviations, numerals, forms of words)
 * parsing arguments with `sys.stdin`
 * ignoring foreign language words
 ## Authors
