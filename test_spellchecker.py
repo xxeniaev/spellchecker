@@ -42,10 +42,20 @@ class SpellcheckerTest(unittest.TestCase):
             'https://drive.google.com/uc?export=download&id='
             '1dNmTiVbc0YQp_LGnCMM7vFzA7XSVODMH', 'load')
 
+        # words with hyphen
         self.assertTrue(s.check_if_word_is_correct('кое-где'))
         self.assertTrue(s.check_if_word_is_correct('откуда-то'))
-        self.assertTrue(s.check_if_word_is_correct('давай-ка'))
         self.assertFalse(s.check_if_word_is_correct('кои-где'))
+        # abbreviations
+        self.assertTrue(s.check_if_word_is_correct('вуз'))
+        self.assertTrue(s.check_if_word_is_correct('ГОС'))
+        # numerals
+        self.assertTrue(s.check_if_word_is_correct('первый'))
+        self.assertTrue(s.check_if_word_is_correct('четвёртый'))
+        # forms of words
+        self.assertTrue(s.check_if_word_is_correct('красивому'))
+        self.assertTrue(s.check_if_word_is_correct('растапливала'))
+        self.assertTrue(s.check_if_word_is_correct('полем'))
 
         self.assertTrue(s_eng.check_if_word_is_correct('awesome'))
         self.assertFalse(s_eng.check_if_word_is_correct('awsome'))
