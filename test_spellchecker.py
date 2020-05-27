@@ -1,20 +1,17 @@
 import unittest
 import spellcheck
 import trie_distance
-# import edit_distance
 import dict_loader
 import dict_creator
 import main
 
 s_eng = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx', 'eng')
+    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx', 'load')
 s_rus = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif', 'rus')
-s_created = spellcheck.Spellchecker(
-    'https://drive.google.com/'
-    'uc?export=download&id=18_GzIghX22D4KqW9axTKeKO4GPayEROl', 'created')
+    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif', 'load')
+s_created = spellcheck.Spellchecker('test_create_eng.txt', 'create')
 w_eng = spellcheck.Writer('Programming is awsome!', s_eng,
                           'console', 'console')
 w_rus = spellcheck.Writer('Программирование васхитительно!', s_rus,
@@ -41,6 +38,15 @@ class SpellcheckerTest(unittest.TestCase):
                                       'много', 'работают'})
 
     def test_check_if_word_is_correct(self):
+        s = spellcheck.Spellchecker(
+            'https://drive.google.com/uc?export=download&id='
+            '1dNmTiVbc0YQp_LGnCMM7vFzA7XSVODMH', 'load')
+
+        self.assertTrue(s.check_if_word_is_correct('кое-где'))
+        self.assertTrue(s.check_if_word_is_correct('откуда-то'))
+        self.assertTrue(s.check_if_word_is_correct('давай-ка'))
+        self.assertFalse(s.check_if_word_is_correct('кои-где'))
+
         self.assertTrue(s_eng.check_if_word_is_correct('awesome'))
         self.assertFalse(s_eng.check_if_word_is_correct('awsome'))
         self.assertTrue(s_rus.check_if_word_is_correct('восхитительно'))
@@ -73,16 +79,6 @@ class SpellcheckerTest(unittest.TestCase):
                          {'программирование': 'программирование',
                           'васхитительно': 'восхитительно'})
 
-    '''def test_edit_distance(self):
-        self.assertEqual(edit_distance.levenshtein_distance(
-            'awsome', 'awesome'), 1)
-        self.assertEqual(edit_distance.levenshtein_distance(
-            'васхитительно', 'восхитительно'), 1)
-        self.assertEqual(edit_distance.levenshtein_distance(
-            'programming', 'programming'), 0)
-        self.assertEqual(edit_distance.levenshtein_distance(
-            'программирование', 'программирование'), 0)'''
-
     def test_dict_loader(self):
         self.assertIsNotNone(dict_loader.load(
             'https://drive.google.com/uc?export=download&id='
@@ -92,12 +88,7 @@ class SpellcheckerTest(unittest.TestCase):
             '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'))
 
     def test_dict_creator(self):
-        self.assertIsNotNone(dict_creator.create(
-            'https://drive.google.com/uc?export=download&id='
-            '18_GzIghX22D4KqW9axTKeKO4GPayEROl'))
-        self.assertIsNotNone(dict_creator.load(
-            'https://drive.google.com/uc?export=download&id='
-            '18_GzIghX22D4KqW9axTKeKO4GPayEROl'))
+        self.assertIsNotNone(dict_creator.create('test_create_eng.txt'))
 
     def test_main(self):
         self.assertIsNotNone(main.get_link('eng'))

@@ -1,7 +1,5 @@
 import argparse
 import spellcheck
-import sys
-import time
 
 
 def main():
@@ -31,7 +29,6 @@ def main():
         file = create
         opt = 'create'
         s = spellcheck.Spellchecker(file, opt)
-
 
     if inp == 'console':
         text = input('enter your text: ')
