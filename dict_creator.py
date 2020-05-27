@@ -28,6 +28,9 @@ def load(link):
     except PermissionError:
         print('probably you don\'t have permission for opening this document')
         exit(1)
+    except UnicodeDecodeError:
+        print('problems with decoding')
+        exit(1)
     except Exception:
         print('probably you don\'t have internet connection')
         exit(1)

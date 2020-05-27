@@ -1,6 +1,7 @@
 import argparse
 import spellcheck
 import sys
+import time
 
 
 def main():
@@ -32,13 +33,18 @@ def main():
         with open(inp, 'r') as f:
             text = f.read()
 
+    start = time.time()
+
     s = spellcheck.Spellchecker(link, lang)
     w = spellcheck.Writer(text, s, out, inp)
     w.write_corrected_text()
 
+    end = time.time()
+
     print('\n')
     print('done!')
     print('thank you for using spellchecker')
+    print('it took ', end - start)
 
 
 def get_link(lang):
@@ -53,7 +59,7 @@ def get_link(lang):
                'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'
     elif lang == 'rus':
         link = 'https://drive.google.com/' \
-               'uc?export=download&id=1Wa-Np2-vPUnNxJhUEDPGAOmYHdqkEydp'
+               'uc?export=download&id=1dNmTiVbc0YQp_LGnCMM7vFzA7XSVODMH'
     elif lang == 'created':
         link = input('enter link for creating dictionary: ')
     return link

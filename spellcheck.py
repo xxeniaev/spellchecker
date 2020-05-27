@@ -53,7 +53,7 @@ class Writer:
                 temp = word.replace(
                     pattern.search(word).group(),
                     '{} <{}>'.format(pattern.search(word).group(),
-                                     dictionary[pattern.search(word).group()]))
+                                     dictionary[pattern.search(word).group().lower()]))
             new_text.append(temp)
         return ' '.join(new_text)
 
