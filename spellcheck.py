@@ -7,11 +7,11 @@ import trie_distance
 
 
 class Spellchecker:
-    def __init__(self, link, lang):
-        if lang == 'created':
-            self.dict = dict_creator.create(link)
+    def __init__(self, given, opt):
+        if opt == 'create':
+            self.dict = dict_creator.create(given)
         else:
-            self.dict = dict_loader.load(link)
+            self.dict = dict_loader.load(given)
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")
             sys.exit(1)

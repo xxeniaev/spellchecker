@@ -1,14 +1,18 @@
-from urllib.request import urlopen
-import codecs
 import re
 from tqdm import tqdm
 
 
-def create(link):
-    contents = load(link)
+def create(file_name):
+    try:
+        with open(file_name) as f:
+            text = f.read()
+    except TypeError:
+        print('please, choose language or file for creating '
+              'your own dictionary')
+        exit(1)
     dictionary = set()
     pattern = re.compile(r'([a-zA-Zа-яА-Я]+)\W*')
-    list_of_words = pattern.findall(contents.lower())
+    list_of_words = pattern.findall(text.lower())
     count = len(list_of_words)
     loop = tqdm(total=count, position=0, leave=False)
     for k in range(count):
@@ -19,20 +23,3 @@ def create(link):
 
     return dictionary
 
-
-def load(link):
-    try:
-        with urlopen(link) as response:
-            html_response = response.read()
-            contents = codecs.decode(html_response, 'utf8')
-    except PermissionError:
-        print('probably you don\'t have permission for opening this document')
-        exit(1)
-    except UnicodeDecodeError:
-        print('problems with decoding')
-        exit(1)
-    except Exception:
-        print('probably you don\'t have internet connection')
-        exit(1)
-
-    return contents

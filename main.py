@@ -14,18 +14,24 @@ def main():
                         default='console', help='enter the name of output file')
     parser.add_argument('--lang', '-l', type=str, metavar='',
                         help='enter language(eng/rus/created)')
+    parser.add_argument('--create', type=str, metavar='',
+                        help='enter the base\'s of words name')
     args = parser.parse_args()
 
     inp = args.input
     out = args.output
     lang = args.lang
+    create = args.create
 
     try:
         link = get_link(lang)
+        opt = 'load'
+        s = spellcheck.Spellchecker(link, opt)
     except UnboundLocalError:
-        print('you have not probably chosen the language or the chosen '
-              'language doesn\'t exist')
-        sys.exit(0)
+        file = create
+        opt = 'create'
+        s = spellcheck.Spellchecker(file, opt)
+
 
     if inp == 'console':
         text = input('enter your text: ')
@@ -33,18 +39,12 @@ def main():
         with open(inp, 'r') as f:
             text = f.read()
 
-    start = time.time()
-
-    s = spellcheck.Spellchecker(link, lang)
     w = spellcheck.Writer(text, s, out, inp)
     w.write_corrected_text()
-
-    end = time.time()
 
     print('\n')
     print('done!')
     print('thank you for using spellchecker')
-    print('it took ', end - start)
 
 
 def get_link(lang):
