@@ -11,9 +11,10 @@ you'll have to download the program from here and have spellchecking mood ***(op
 * use `--lang` or `-l` for choosing language or creating dictionary from your text.
   * `eng`(for choosing English)
   * `rus`(for choosing Russian)
-  * `created`(creating dictionary):
-    * enter link for the text in `enter link for creating dictionary:` line
-* `done!` message says that chellcheck is correctly complited :)
+  * (`test_eng` and `test_rus` are for developers)
+* use `--created` for choosing your file for creating new dictionary.
+* *!not scary warning!* try to not leave the field `--lang` or `--create` empty. that is the only way, program can check you words.
+* `done!` message says that chellcheck is correctly complited, im truly happy if you saw it :)
 ### Examples
 ```
 python main.py --input file_name.txt --output file_name.txt --lang eng
@@ -22,10 +23,13 @@ python main.py --input file_name.txt --output file_name.txt --lang eng
 python main.py --input file_name.txt --lang eng
 ```
 ```
-python main.py --output file_name.txt --lang eng
+python main.py --output file_name.txt --create file_name.txt
 ```
 ```
 python main.py --lang eng
+```
+```
+python main.py --create file_name.txt
 ```
 ## Modules
 * `main.py` launching
@@ -36,7 +40,6 @@ python main.py --lang eng
 * `test_spellchecker.py` testing program
 ## Future versions
 * more tests(words with hyphen, abbreviations, numerals, forms of words)
-* make counting faster(n-gramms, automation, hashing, data structures, fuzzy serch, pre-calculation)
 * parsing arguments with `sys.stdin`
 * ignoring foreign language words
 ## Authors
