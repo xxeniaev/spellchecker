@@ -34,8 +34,8 @@ def search(word, max_cost, trie):
     results = []
     # recursively search each branch of the trie
     for letter in trie.children:
-        search_recursive(trie.children[letter], letter, word, current_row,
-                        results, max_cost)
+        search_recursive(trie.children[letter],
+                         letter, word, current_row, results, max_cost)
     return results
 
 
@@ -65,5 +65,5 @@ def search_recursive(node, letter, word, previous_row, results, max_cost):
     # recursively search each branch of the trie
     if min(current_row) <= max_cost:
         for letter in node.children:
-            search_recursive(node.children[letter], letter, word, current_row,
-                            results, max_cost)
+            search_recursive(node.children[letter],
+                             letter, word, current_row, results, max_cost)

@@ -22,4 +22,3 @@ def create(file_name):
     loop.close()
 
     return dictionary
-

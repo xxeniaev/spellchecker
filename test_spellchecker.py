@@ -104,11 +104,12 @@ class SpellcheckerTest(unittest.TestCase):
         self.assertIsNotNone(main.get_link('eng'))
         self.assertIsNotNone(main.get_link('rus'))
 
-    def test_trie_distance_search(self):
+    def test_trie_distance(self):
         trie_rus = trie_distance.dict_to_trie(s_rus.dict)
         trie_eng = trie_distance.dict_to_trie(s_eng.dict)
 
-        self.assertEqual(trie_distance.search('васхитительно', 0, trie_rus), [])
+        self.assertEqual(trie_distance.search('васхитительно', 0, trie_rus),
+                         [])
         self.assertEqual(trie_distance.search('васхитительно', 1, trie_rus),
                          [('восхитительно', 1)])
         self.assertEqual(trie_distance.search('васхитительно', 2, trie_rus),

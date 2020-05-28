@@ -9,7 +9,8 @@ def main():
     parser.add_argument('--input', '-in', type=str, metavar='',
                         default='console', help='enter the name of input file')
     parser.add_argument('--output', '-out', type=str, metavar='',
-                        default='console', help='enter the name of output file')
+                        default='console',
+                        help='enter the name of output file')
     parser.add_argument('--lang', '-l', type=str, metavar='',
                         help='enter language(eng/rus/created)')
     parser.add_argument('--create', type=str, metavar='',
