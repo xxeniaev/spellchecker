@@ -25,11 +25,11 @@ def main():
     try:
         link = get_link(lang)
         opt = 'load'
-        s = spellcheck.Spellchecker(link, opt)
+        s = spellcheck.Spellchecker(link, opt, lang)
     except UnboundLocalError:
         file = create
         opt = 'create'
-        s = spellcheck.Spellchecker(file, opt)
+        s = spellcheck.Spellchecker(file, opt, opt)
 
     if inp == 'console':
         text = input('enter your text: ')

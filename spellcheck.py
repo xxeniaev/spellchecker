@@ -7,28 +7,31 @@ import trie_distance
 
 
 class Spellchecker:
-    def __init__(self, given, opt):
+    def __init__(self, given, opt, lang):
         if opt == 'create':
             self.dict = dict_creator.create(given)
         else:
             self.dict = dict_loader.load(given)
+        self.lang = lang
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")
             sys.exit(1)
 
     def check_if_word_is_correct(self, word):
-        word = word.lower()
-        return word in self.dict
+        return word.lower() in self.dict
 
     def to_correct_word(self, word):
+        if self.lang == 'eng':
+            if re.search(r'([a-zA-Z]+)', word) is None:
+                return word
+        if self.lang == 'test_rus':
+            if re.search(r'([а-яА-Я]+)', word) is None:
+                return word
         trie = trie_distance.dict_to_trie(self.dict)
-        correct_word = ''
         for i in range(len(word)+1):
             results = trie_distance.search(word, i, trie)
             if results:
-                correct_word = results[0][0]
-                break
-        return correct_word
+                return results[0][0]
 
 
 class Writer:

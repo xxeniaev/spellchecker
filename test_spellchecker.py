@@ -90,15 +90,26 @@ class SpellcheckerTest(unittest.TestCase):
                           'васхитительно': 'восхитительно'})
 
     def test_dict_loader(self):
-        self.assertIsNotNone(dict_loader.load(
-            'https://drive.google.com/uc?export=download&id='
-            '1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx'))
-        self.assertIsNotNone(dict_loader.load(
-            'https://drive.google.com/uc?export=download&id='
-            '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif'))
+        dict_eng = dict_loader.load('https://drive.google.com/'
+                                    'uc?export=download&id='
+                                    '1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx')
+        dict_rus = dict_loader.load('https://drive.google.com/'
+                                    'uc?export=download&id='
+                                    '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif')
+
+        self.assertIsNotNone(dict_eng)
+        self.assertIsNotNone(dict_rus)
+        self.assertIn('awesome', dict_eng)
+        self.assertIn('восхитительно', dict_rus)
+        self.assertNotIn('awsome', dict_eng)
+        self.assertNotIn('васхитительно', dict_rus)
 
     def test_dict_creator(self):
-        self.assertIsNotNone(dict_creator.create('test_create_eng.txt'))
+        dictionary = dict_creator.create('test_create_eng.txt')
+
+        self.assertIsNotNone(dictionary)
+        self.assertIn('awesome', dictionary)
+        self.assertNotIn('awsome', dictionary)
 
     def test_main(self):
         self.assertIsNotNone(main.get_link('eng'))
