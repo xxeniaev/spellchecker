@@ -13,8 +13,9 @@ you'll have to download the program from here and have spellchecking mood ***(op
   * `rus`(for choosing Russian)
   * (`test_eng` and `test_rus` are for developers)
 * use `--created` for choosing your file for creating new dictionary.
-* *!not scary warning!* try to not leave the field `--lang` or `--create` empty. that is the only way, program can check you words.
 * `done!` message says that chellcheck is correctly complited, im truly happy if you saw it :)
+
+> *!warning!* try to not leave the field `--lang` or `--create` empty. that is the only way, program can check you words.
 ### Examples
 ```
 python main.py --input file_name.txt --output file_name.txt --lang eng
@@ -40,6 +41,5 @@ python main.py --create file_name.txt
 * `test_spellchecker.py` testing program
 ## Future versions
 * parsing arguments with `sys.stdin`
-* ignoring foreign language words
 ## Authors
 * **Xenia Evdokimova** ([xxeniaev](https://github.com/xxeniaev))
