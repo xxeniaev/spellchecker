@@ -21,10 +21,10 @@ class Spellchecker:
         return word.lower() in self.dict
 
     def to_correct_word(self, word):
-        if self.lang == 'eng':
+        if self.lang == 'eng' or self.lang == 'test_eng':
             if re.search(r'([a-zA-Z]+)', word) is None:
                 return word
-        if self.lang == 'test_rus':
+        if self.lang == 'rus' or self.lang == 'test_rus':
             if re.search(r'([а-яА-Я]+)', word) is None:
                 return word
         trie = trie_distance.dict_to_trie(self.dict)
