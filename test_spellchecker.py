@@ -7,11 +7,11 @@ import main
 
 s_eng = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx', 'load')
+    'uc?export=download&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx', 'load', 'eng')
 s_rus = spellcheck.Spellchecker(
     'https://drive.google.com/'
-    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif', 'load')
-s_created = spellcheck.Spellchecker('test_create_eng.txt', 'create')
+    'uc?export=download&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif', 'load', 'rus')
+s_created = spellcheck.Spellchecker('test_create_eng.txt', 'create', 'create')
 w_eng = spellcheck.Writer('Programming is awsome!', s_eng,
                           'console', 'console')
 w_rus = spellcheck.Writer('Программирование васхитительно!', s_rus,
@@ -40,7 +40,7 @@ class SpellcheckerTest(unittest.TestCase):
     def test_check_if_word_is_correct(self):
         s = spellcheck.Spellchecker(
             'https://drive.google.com/uc?export=download&id='
-            '1dNmTiVbc0YQp_LGnCMM7vFzA7XSVODMH', 'load')
+            '1dNmTiVbc0YQp_LGnCMM7vFzA7XSVODMH', 'load', 'eng')
 
         # words with hyphen
         self.assertTrue(s.check_if_word_is_correct('кое-где'))

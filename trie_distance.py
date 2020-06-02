@@ -1,10 +1,10 @@
 from pip._vendor.msgpack.fallback import xrange
 
 
-# The Trie data structure keeps a set of words, organized with one node for
-# each letter. Each node has a branch for each letter that may follow it in the
-# set of words.
 class TrieNode:
+    """The Trie data structure keeps a set of words, organized with one node
+    for each letter. Each node has a branch for each letter that may follow it
+    in the set of words."""
     def __init__(self):
         self.word = None
         self.children = {}
