@@ -4,10 +4,14 @@ from tqdm import tqdm
 
 
 def create(file_name):
+    """
+    creates dictionary from the text
+    :param file_name: file for creating dictionary
+    :return: list of correct words
+    """
     try:
         with open(file_name) as f:
-            text = codecs.decode(codecs.encode(f.read(), 'cp1251'),
-                          'utf8')
+            text = codecs.decode(codecs.encode(f.read(), 'cp1251'), 'utf8')
     except TypeError:
         print('please, choose language or file for creating '
               'your own dictionary')

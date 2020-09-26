@@ -21,8 +21,12 @@ class Spellchecker:
         return word in self.dict
 
     def to_correct_word(self, word):
+        """
+        :param word: takes word to correct
+        :return: corrected word
+        """
         if word.upper() in self.dict:
-            return word.upper
+            return word.upper()
         word.lower()
         if self.lang == 'eng' or self.lang == 'test_eng':
             if re.search(r'([a-zA-Z]+)', word) is None:
@@ -49,6 +53,8 @@ class Writer:
 
     def create_corrected_text(self):
         pattern = re.compile(r'([a-zA-Zа-яА-Я]+)')
+        # составляется словарь, где ключ - старое слово, а значение - новое
+        # значение(исправленное либо верное слово)
         dictionary = check_text(prepare_text(self.old_text), self.spellchecker)
         new_text = []
         for word in self.old_text.split():
@@ -72,8 +78,10 @@ class Writer:
 
 
 def prepare_text(text):
-    """takes not checked text and splits it by words
-    (words are not low cased)"""
+    """
+    :param text:  given text to be splited
+    :return:  list of words in the text (words are not low cased)
+    """
 
     pattern = re.compile(r'([a-zA-Zа-яА-Я]+)\W*')
     return pattern.findall(text)
