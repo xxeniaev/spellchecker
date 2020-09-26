@@ -18,6 +18,6 @@ def load(link):
         exit(1)
     else:
         dictionary = set()
-        dictionary.update(contents.lower().split())
+        dictionary.update(contents.split())
 
     return dictionary

@@ -1,3 +1,4 @@
+import codecs
 import re
 from tqdm import tqdm
 
@@ -5,7 +6,8 @@ from tqdm import tqdm
 def create(file_name):
     try:
         with open(file_name) as f:
-            text = f.read()
+            text = codecs.decode(codecs.encode(f.read(), 'cp1251'),
+                          'utf8')
     except TypeError:
         print('please, choose language or file for creating '
               'your own dictionary')

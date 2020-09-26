@@ -18,9 +18,12 @@ class Spellchecker:
             sys.exit(1)
 
     def check_if_word_is_correct(self, word):
-        return word.lower() in self.dict
+        return word in self.dict
 
     def to_correct_word(self, word):
+        if word.upper() in self.dict:
+            return word.upper
+        word.lower()
         if self.lang == 'eng' or self.lang == 'test_eng':
             if re.search(r'([a-zA-Z]+)', word) is None:
                 return word
@@ -52,12 +55,11 @@ class Writer:
             temp = word
             if pattern.search(word).group().lower() \
                     != dictionary[pattern.search(
-                    word.lower()).group()]:
+                    word).group()]:
                 temp = word.replace(
                     pattern.search(word).group(),
                     '{} <{}>'.format(pattern.search(word).group(),
-                                     dictionary[pattern.search(word).group().
-                                     lower()]))
+                                     dictionary[pattern.search(word).group()]))
             new_text.append(temp)
         return ' '.join(new_text)
 
@@ -83,7 +85,6 @@ def check_text(words, spellchecker):
 
     words_and_changes = {}
     for word in words:
-        word = word.lower()
         if word not in words_and_changes:
             if spellchecker.check_if_word_is_correct(word):
                 words_and_changes[word] = word
