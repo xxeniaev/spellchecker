@@ -1,17 +1,18 @@
 import re
-import dict_loader
-import dict_creator
 import codecs
 import sys
 import trie_distance
+
+from DictCreator import DictCreator
+from DictLoader import DictLoader
 
 
 class Spellchecker:
     def __init__(self, given, opt, lang):
         if opt == 'create':
-            self.dict = dict_creator.create(given)
+            self.dict = DictCreator(given).create()
         else:
-            self.dict = dict_loader.load(given)
+            self.dict = DictLoader(given).load()
         self.lang = lang
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")

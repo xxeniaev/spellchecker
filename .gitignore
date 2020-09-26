@@ -1,20 +1,10 @@
 /venv/
 /.idea/
 __pycache__/
-corrected_eng.txt
-corrected_rus.txt
-0. test_correcting_text.py
-1. test_russian.py
-2. test_dict.py
-3. test_exceptions.py
-4. test_dist.py
-5. test_stdin.py
-6. test_dictcreator.py
-7. test_prcessbar.py
-8. test_diflang.py
+test programms
+dicts
 text_eng.txt
 text_rus.txt
 edit_distance.py
-dicts
 test_create_eng.txt
 test_create_rus.txt
