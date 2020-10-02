@@ -5,7 +5,7 @@ you'll have to download the program from here and have spellchecking mood ***(op
 ### Requirements
 * `tqdm` (installing by pip)
 ## Usage
-### Notes
+### Launch
 * use `--help` or `-h` for help.
 * use `--input` or `-in` for choosing file to be corrected (make sure that it is located in the directory where the spellchecker is). if you don't wanna use this option you can write the text on your own below in `enter your text:`  line ***(optional)***.
 * use `--output` or `-out` for choosing the name of file where you'd like to be written the corrected text for you. you are able to not use this option and to get the wonderful corrected text below, on the console ***(optional)***.
