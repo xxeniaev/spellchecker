@@ -1,8 +1,8 @@
 import unittest
 import spellcheck
 import trie_distance
-import dict_loader
-import dict_creator
+from DictCreator import DictCreator
+from DictLoader import DictLoader
 import main
 
 s_eng = spellcheck.Spellchecker(
@@ -24,7 +24,7 @@ class SpellcheckerTest(unittest.TestCase):
         self.assertIsNotNone(s_eng.dict)
         self.assertIsNotNone(s_rus.dict)
         self.assertEqual(s_eng.dict, {'programming', 'in', 'python', 'is',
-                                      'awesome', 'i', 'want', 'to', 'program',
+                                      'awesome', 'I', 'want', 'to', 'program',
                                       'everyday', 'hope', 'if', 'continue',
                                       'will', 'be', 'good', 'enough', 'a',
                                       'professional', 'programmer', 'one',
@@ -35,7 +35,8 @@ class SpellcheckerTest(unittest.TestCase):
                                       'надеюсь', 'что', 'если', 'продолжу',
                                       'то', 'однажды', 'стану', 'крутым',
                                       'программистом', 'слышала', 'они',
-                                      'много', 'работают'})
+                                      'много', 'работают', 'ГОС', 'кое-где',
+                                      'привет', 'как', 'дела'})
 
     def test_check_if_word_is_correct(self):
         s = spellcheck.Spellchecker(
@@ -66,6 +67,10 @@ class SpellcheckerTest(unittest.TestCase):
         self.assertEqual(s_eng.to_correct_word('awsome'), 'awesome')
         self.assertEqual(s_rus.to_correct_word('васхитительно'),
                          'восхитительно')
+        self.assertEqual(s_rus.to_correct_word('гос'), 'ГОС')
+        self.assertEqual(s_rus.to_correct_word('коегде'), 'кое-где')
+        self.assertEqual(s_rus.to_correct_word('приветкакдела'),
+                         'привет{ }как{ }дела')
 
     def test_create_corrected_text(self):
         self.assertEqual(w_eng.create_corrected_text(),
@@ -83,33 +88,33 @@ class SpellcheckerTest(unittest.TestCase):
     def test_check_text(self):
         self.assertEqual(spellcheck.check_text(['Programming', 'is', 'awsome'],
                                                s_eng), {
-            'programming': 'programming', 'is': 'is', 'awsome': 'awesome'})
+            'Programming': 'programming', 'is': 'is', 'awsome': 'awesome'})
         self.assertEqual(spellcheck.check_text(['Программирование',
                                                 'васхитительно'], s_rus),
-                         {'программирование': 'программирование',
+                         {'Программирование': 'программирование',
                           'васхитительно': 'восхитительно'})
 
     def test_dict_loader(self):
-        dict_eng = dict_loader.load('https://drive.google.com/'
+        dict_eng = DictLoader('https://drive.google.com/'
                                     'uc?export=download&id='
                                     '1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx')
-        dict_rus = dict_loader.load('https://drive.google.com/'
+        dict_rus = DictLoader('https://drive.google.com/'
                                     'uc?export=download&id='
                                     '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif')
 
         self.assertIsNotNone(dict_eng)
         self.assertIsNotNone(dict_rus)
-        self.assertIn('awesome', dict_eng)
-        self.assertIn('восхитительно', dict_rus)
-        self.assertNotIn('awsome', dict_eng)
-        self.assertNotIn('васхитительно', dict_rus)
+        self.assertIn('awesome', dict_eng.load())
+        self.assertIn('восхитительно', dict_rus.load())
+        self.assertNotIn('awsome', dict_eng.load())
+        self.assertNotIn('васхитительно', dict_rus.load())
 
     def test_dict_creator(self):
-        dictionary = dict_creator.create('test_create_eng.txt')
+        dictionary = DictCreator('test_create_eng.txt')
 
         self.assertIsNotNone(dictionary)
-        self.assertIn('awesome', dictionary)
-        self.assertNotIn('awsome', dictionary)
+        self.assertIn('awesome', dictionary.create())
+        self.assertNotIn('awsome', dictionary.create())
 
     def test_main(self):
         self.assertIsNotNone(main.get_link('eng'))

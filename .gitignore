@@ -8,3 +8,4 @@ text_rus.txt
 edit_distance.py
 test_create_eng.txt
 test_create_rus.txt
+*.rar

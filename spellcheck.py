@@ -26,20 +26,29 @@ class Spellchecker:
         :param word: takes word to correct
         :return: corrected word
         """
+        # проверка аббревиатур
         if word.upper() in self.dict:
             return word.upper()
+
         word.lower()
+        # проверка на внедрение иностранных слов в текст
+        # (они не будут исправляться)
         if self.lang == 'eng' or self.lang == 'test_eng':
             if re.search(r'([a-zA-Z]+)', word) is None:
                 return word
         if self.lang == 'rus' or self.lang == 'test_rus':
-            if re.search(r'([а-яА-Я]+)', word) is None:
+            if re.search(r'([а-яА-ЯёЁ]+)', word) is None:
                 return word
+
         trie = trie_distance.dict_to_trie(self.dict)
         for i in range(len(word)+1):
             results = trie_distance.search(word, i, trie)
             if results:
-                return results[0][0]
+                res = max(results, key=lambda x: x[0])
+                if res[1] > len(word)/2:
+                    return '{ }'.join(find_words(word, words=self.dict))
+                else:
+                    return res[0]
 
 
 class Writer:
@@ -100,3 +109,29 @@ def check_text(words, spellchecker):
             else:
                 words_and_changes[word] = spellchecker.to_correct_word(word)
     return words_and_changes
+
+
+def find_words(combination, words, prefix=''):
+    if not combination:
+        return []
+    if (not prefix) and (combination in words):
+        return [combination]
+    prefix, suffix = prefix + combination[0], combination[1:]
+    solutions = []
+    # Case 1: prefix in solution
+    if prefix in words:
+        try:
+            solutions.append([prefix] + find_words(suffix, words, ''))
+        except ValueError:
+            pass
+    # Case 2: prefix not in solution
+    try:
+        solutions.append(find_words(suffix, words, prefix))
+    except ValueError:
+        pass
+    if solutions:
+        return sorted(solutions,
+                      key=lambda solution: [len(word) for word in solution],
+                      reverse=True)[0]
+    else:
+        raise ValueError('no solution')
