@@ -20,9 +20,9 @@ class DictLoader:
         except UnicodeDecodeError:
             print('problems with decoding')
             exit(1)
-        # except Exception:
-        #     print('probably you don\'t have internet connection')
-        #     exit(1)
+        except Exception:
+            print('probably you don\'t have internet connection')
+            exit(1)
         else:
             dictionary = set()
             dictionary.update(contents.split())

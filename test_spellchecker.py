@@ -95,12 +95,10 @@ class SpellcheckerTest(unittest.TestCase):
                           'васхитительно': 'восхитительно'})
 
     def test_dict_loader(self):
-        dict_eng = DictLoader('https://drive.google.com/'
-                                    'uc?export=download&id='
-                                    '1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx')
-        dict_rus = DictLoader('https://drive.google.com/'
-                                    'uc?export=download&id='
-                                    '1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif')
+        dict_eng = DictLoader('https://drive.google.com/uc?export=download'
+                              '&id=1oHIU8fYI3ZxIqB1ZhmdGEr6rkqQE1nZx')
+        dict_rus = DictLoader('https://drive.google.com/uc?export=download'
+                              '&id=1vtGbi9ozjV7nWDXHleS_ilTv7bsrpcif')
 
         self.assertIsNotNone(dict_eng)
         self.assertIsNotNone(dict_rus)
