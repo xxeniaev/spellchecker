@@ -19,7 +19,7 @@ class TrieNode:
 
 
 def dict_to_trie(name):
-    """read dictionary file into a trie"""
+    """reads dictionary file into a trie"""
     trie = TrieNode()
     for word in name:
         trie.insert(word)
@@ -27,8 +27,12 @@ def dict_to_trie(name):
 
 
 def search(word, max_cost, trie):
-    """The function returns a list of all words that are less than the given
-    maximum distance from the target word"""
+    """
+    :param word: target word
+    :param max_cost: given maximum distance
+    :param trie: trie
+    :return: a list of all words that are less than the given maximum distance
+    """
     # build first row
     current_row = range(len(word) + 1)
     results = []

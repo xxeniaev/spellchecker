@@ -1,17 +1,18 @@
 import re
-import dict_loader
-import dict_creator
 import codecs
 import sys
 import trie_distance
+
+from DictCreator import DictCreator
+from DictLoader import DictLoader
 
 
 class Spellchecker:
     def __init__(self, given, opt, lang):
         if opt == 'create':
-            self.dict = dict_creator.create(given)
+            self.dict = DictCreator(given).create()
         else:
-            self.dict = dict_loader.load(given)
+            self.dict = DictLoader(given).load()
         self.lang = lang
         if not self.dict:
             raise AttributeError("sorry, dictionary can't be loaded")
@@ -21,20 +22,33 @@ class Spellchecker:
         return word in self.dict
 
     def to_correct_word(self, word):
+        """
+        :param word: takes word to correct
+        :return: corrected word
+        """
+        # проверка аббревиатур
         if word.upper() in self.dict:
-            return word.upper
+            return word.upper()
+
         word.lower()
+        # проверка на внедрение иностранных слов в текст
+        # (они не будут исправляться)
         if self.lang == 'eng' or self.lang == 'test_eng':
             if re.search(r'([a-zA-Z]+)', word) is None:
                 return word
         if self.lang == 'rus' or self.lang == 'test_rus':
-            if re.search(r'([а-яА-Я]+)', word) is None:
+            if re.search(r'([а-яА-ЯёЁ]+)', word) is None:
                 return word
+
         trie = trie_distance.dict_to_trie(self.dict)
         for i in range(len(word)+1):
             results = trie_distance.search(word, i, trie)
             if results:
-                return results[0][0]
+                res = max(results, key=lambda x: x[0])
+                if res[1] > len(word)/2:
+                    return '{ }'.join(find_words(word, words=self.dict))
+                else:
+                    return res[0]
 
 
 class Writer:
@@ -49,6 +63,8 @@ class Writer:
 
     def create_corrected_text(self):
         pattern = re.compile(r'([a-zA-Zа-яА-Я]+)')
+        # составляется словарь, где ключ - старое слово, а значение - новое
+        # значение(исправленное либо верное слово)
         dictionary = check_text(prepare_text(self.old_text), self.spellchecker)
         new_text = []
         for word in self.old_text.split():
@@ -72,8 +88,10 @@ class Writer:
 
 
 def prepare_text(text):
-    """takes not checked text and splits it by words
-    (words are not low cased)"""
+    """
+    :param text:  given text to be splited
+    :return:  list of words in the text (words are not low cased)
+    """
 
     pattern = re.compile(r'([a-zA-Zа-яА-Я]+)\W*')
     return pattern.findall(text)
@@ -91,3 +109,29 @@ def check_text(words, spellchecker):
             else:
                 words_and_changes[word] = spellchecker.to_correct_word(word)
     return words_and_changes
+
+
+def find_words(combination, words, prefix=''):
+    if not combination:
+        return []
+    if (not prefix) and (combination in words):
+        return [combination]
+    prefix, suffix = prefix + combination[0], combination[1:]
+    solutions = []
+    # Case 1: prefix in solution
+    if prefix in words:
+        try:
+            solutions.append([prefix] + find_words(suffix, words, ''))
+        except ValueError:
+            pass
+    # Case 2: prefix not in solution
+    try:
+        solutions.append(find_words(suffix, words, prefix))
+    except ValueError:
+        pass
+    if solutions:
+        return sorted(solutions,
+                      key=lambda solution: [len(word) for word in solution],
+                      reverse=True)[0]
+    else:
+        raise ValueError('no solution')

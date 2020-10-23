@@ -1,21 +1,9 @@
-import argparse
+from ArgParser import ArgParser
 import spellcheck
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='enter input and/or output files(console by default) '
-                    'and language')
-    parser.add_argument('--input', '-in', type=str, metavar='',
-                        default='console', help='enter the name of input file')
-    parser.add_argument('--output', '-out', type=str, metavar='',
-                        default='console',
-                        help='enter the name of output file')
-    parser.add_argument('--lang', '-l', type=str, metavar='',
-                        help='enter language(eng/rus/created)')
-    parser.add_argument('--create', type=str, metavar='',
-                        help='enter the base\'s of words name')
-    args = parser.parse_args()
+    args = ArgParser().parse_args()
 
     inp = args.input
     out = args.output
